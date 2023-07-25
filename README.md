@@ -1,9 +1,9 @@
-# Lab02 Conway's Game of Life
+# Laboratorio 2 Conway's Game of Life
 
 Para este laboratorio de Gráficas por Computadora se puso en práctica el renderizado en tiempo real utilizando el algoritmo de Conway’s Game Of Life utilizando SDL. 
 <br>
 Este algoritmo se trada de un autómata celular, donde un modelo matemático simula un sistema en el que cada célula en una cuadrícula puede estar viva o muerta, y evoluciona en el tiempo siguiendo reglas simples. En este juego, las células están representadas como píxeles en una ventana gráfica. Las células pueden estar en dos estados: vivas, representadas por píxeles blancos o de colores, o muertas, representadas por píxeles negros. 
-<br>
+<br><br>
 La evolución de las células se basa en reglas simples que siguen el siguiente patrón:<br>
 1. Cualquier célula viva con menos de dos vecinos vivos muere por soledad.<br>
 2. Cualquier célula viva con dos o tres vecinos vivos sigue viva para la siguiente generación.<br>
