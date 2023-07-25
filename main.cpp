@@ -67,10 +67,8 @@ void renderBuffer(SDL_Renderer* renderer) {
 int countAliveNeighbors(int x, int y) {
     int aliveNeighbors = 0;
 
-    // Revisar los 8 vecinos del píxel en (x, y)
     for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++) {
-            // Excluir el píxel central en sí mismo
             if (i == 0 && j == 0) {
                 continue;
             }
@@ -78,9 +76,7 @@ int countAliveNeighbors(int x, int y) {
             int neighborX = x + i;
             int neighborY = y + j;
 
-            // Revisar si el vecino está dentro de los límites del framebuffer
             if (neighborX >= 0 && neighborX < RENDER_WIDTH && neighborY >= 0 && neighborY < RENDER_HEIGHT) {
-                // Revisar si el vecino está vivo (blanco)
                 if (framebuffer[neighborY * RENDER_WIDTH + neighborX].r == aliveColor.r &&
                     framebuffer[neighborY * RENDER_WIDTH + neighborX].g == aliveColor.g &&
                     framebuffer[neighborY * RENDER_WIDTH + neighborX].b == aliveColor.b) {
@@ -96,33 +92,26 @@ int countAliveNeighbors(int x, int y) {
 void updateGameOfLife() {
     Color newFramebuffer[FRAMEBUFFER_SIZE];
 
-    // Iterar sobre cada píxel en el framebuffer
     for (int y = 0; y < RENDER_HEIGHT; y++) {
         for (int x = 0; x < RENDER_WIDTH; x++) {
-            // Obtener el estado actual del píxel
             Color currentColor = framebuffer[y * RENDER_WIDTH + x];
             bool isAlive = (currentColor.r == aliveColor.r &&
                             currentColor.g == aliveColor.g &&
                             currentColor.b == aliveColor.b);
 
-            // Contar el número de vecinos vivos
             int aliveNeighbors = countAliveNeighbors(x, y);
 
             // Aplicar las reglas del Juego de la Vida
             if (isAlive) {
                 if (aliveNeighbors < 2 || aliveNeighbors > 3) {
-                    // Cualquier célula viva con menos de dos o más de tres vecinos vivos muere
                     newFramebuffer[y * RENDER_WIDTH + x] = deadColor;
                 } else {
-                    // Cualquier célula viva con dos o tres vecinos vivos sobrevive
                     newFramebuffer[y * RENDER_WIDTH + x] = aliveColor;
                 }
             } else {
                 if (aliveNeighbors == 3) {
-                    // Cualquier célula muerta con exactamente tres vecinos vivos se vuelve viva
                     newFramebuffer[y * RENDER_WIDTH + x] = aliveColor;
                 } else {
-                    // Las células muertas con cualquier otro número de vecinos vivos permanecen muertas
                     newFramebuffer[y * RENDER_WIDTH + x] = deadColor;
                 }
             }
@@ -133,16 +122,13 @@ void updateGameOfLife() {
 }
 
 void initializeGameOfLife() {
-    // Limpiar el framebuffer (opcional, ya que actualizamos todos los píxeles durante la inicialización)
     std::memset(framebuffer, 0, sizeof(framebuffer));
 
-    // Definir el patrón inicial - Spaceship (Glider)
     std::vector<std::pair<int, int>> gliderPattern = {
             { 1, 0 }, { 2, 1 }, { 0, 2 }, { 1, 2 }, { 2, 2 }
     };
 
-    // Colocar el patrón de la nave espacial en posiciones aleatorias en el framebuffer
-    for (int i = 0; i < 100; i++) {  // Incrementar el número de naves espaciales a 100
+    for (int i = 0; i < 100; i++) {  
         int x = std::rand() % RENDER_WIDTH;
         int y = std::rand() % RENDER_HEIGHT;
 
@@ -153,7 +139,6 @@ void initializeGameOfLife() {
         }
     }
 
-    // Definir el patrón inicial - Gun (Gosper glider gun)
     std::vector<std::pair<int, int>> gunPattern = {
             { 0, 4 }, { 1, 4 }, { 0, 5 }, { 1, 5 }, { 10, 4 }, { 10, 5 }, { 10, 6 },
             { 11, 3 }, { 11, 7 }, { 12, 2 }, { 12, 8 }, { 13, 2 }, { 13, 8 }, { 14, 5 },
@@ -163,8 +148,7 @@ void initializeGameOfLife() {
             { 35, 3 }
     };
 
-    // Colocar el patrón de la pistola en posiciones aleatorias en el framebuffer
-    for (int i = 0; i < 20; i++) {  // Incrementar el número de pistolas a 20
+    for (int i = 0; i < 20; i++) {  
         int x = std::rand() % RENDER_WIDTH;
         int y = std::rand() % RENDER_HEIGHT;
 
@@ -175,13 +159,11 @@ void initializeGameOfLife() {
         }
     }
 
-    // Definir el patrón inicial - Glider
     std::vector<std::pair<int, int>> smallGliderPattern = {
             { 0, 0 }, { 1, 0 }, { 2, 0 }, { 0, 1 }, { 1, 2 }
     };
 
-    // Colocar el patrón pequeño de la nave espacial en posiciones aleatorias en el framebuffer
-    for (int i = 0; i < 50; i++) {  // Incrementar el número de naves pequeñas a 50
+    for (int i = 0; i < 50; i++) { 
         int x = std::rand() % RENDER_WIDTH;
         int y = std::rand() % RENDER_HEIGHT;
 
@@ -213,7 +195,6 @@ int main(int argc, char* args[]) {
     bool quit = false;
     SDL_Event event;
     while (!quit) {
-        // Manejar eventos
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 quit = true;
