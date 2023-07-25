@@ -1,5 +1,7 @@
 CMakeLists.txt.user
 CMakeCache.txt
+cmake-build-debug
+.idea
 CMakeFiles
 CMakeScripts
 Testing
